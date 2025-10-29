@@ -2,6 +2,7 @@
 session_start();
 include 'db.php';
 
+// Redirect to login if not logged in
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit;
@@ -9,6 +10,7 @@ if (!isset($_SESSION['user_id'])) {
 
 $message = '';
 
+// Handle form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $title = $_POST['title'];
     $content = $_POST['content'];
@@ -27,16 +29,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html>
 <head>
     <title>Create Post</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<h2>Create New Post</h2>
-<form method="POST">
-    Title: <input type="text" name="title" required><br><br>
-    Content:<br>
-    <textarea name="content" rows="6" cols="50" required></textarea><br><br>
-    <button type="submit">Publish</button>
-</form>
-<p><?= $message ?></p>
+<div class="container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>MyBlog</h2>
+        <a href="index.php">Dashboard</a>
+        <a href="create.php">Create Post</a>
+        <a href="logout.php">Logout</a>
+    </div>
+
+    <!-- Main content -->
+    <div class="main-content">
+        <h2>Create New Post</h2>
+        <form method="POST">
+            <input type="text" name="title" placeholder="Post Title" required>
+            <textarea name="content" rows="8" placeholder="Post Content" required></textarea>
+            <button type="submit">Publish</button>
+        </form>
+        <?php if (!empty($message)) { ?>
+            <p class="message"><?= $message ?></p>
+        <?php } ?>
+    </div>
+</div>
 </body>
 </html>
+
 

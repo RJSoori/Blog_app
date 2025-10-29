@@ -1,0 +1,188 @@
+/* ===========================
+   General Body & Font
+=========================== */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+/* ===========================
+   Dashboard Container & Sidebar
+=========================== */
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 220px;
+    background-color: #1f1f1f;
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.sidebar h2 {
+    color: #00bcd4;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.sidebar a {
+    color: #b0b0b0;
+    text-decoration: none;
+    padding: 10px 8px;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.sidebar a:hover {
+    background-color: #333;
+    color: #fff;
+}
+
+/* ===========================
+   Main Content
+=========================== */
+.main-content {
+    flex: 1;
+    padding: 40px;
+    background-color: #181818;
+}
+
+/* Headings */
+h2 {
+    color: #00bcd4;
+}
+
+h3 {
+    color: #00bcd4;
+}
+
+/* ===========================
+   Post Styling
+=========================== */
+.post {
+    background-color: #1e1e1e;
+    border: 1px solid #2a2a2a;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+}
+
+.post h3, .post h4 {
+    margin-top: 0;
+    color: #ffffff;
+}
+
+.post small {
+    color: #888;
+}
+
+.actions a {
+    color: #00bcd4;
+    margin-right: 10px;
+    font-size: 14px;
+}
+
+.actions a:hover {
+    text-decoration: underline;
+}
+
+/* ===========================
+   Forms (Dashboard / Auth)
+=========================== */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+input, textarea {
+    background-color: #2a2a2a;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    color: #fff;
+    width: 100%;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: #888;
+}
+
+button {
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #fff;
+    background-color: #00bcd4;
+    transition: 0.3s;
+}
+
+button:hover {
+    background-color: #0097a7;
+}
+
+/* Auth Container (login/register/logout) */
+.auth-container {
+    max-width: 400px;
+    margin: 80px auto;
+    padding: 30px;
+    background-color: #1e1e1e;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    text-align: center;
+}
+
+.auth-container h2 {
+    margin-bottom: 20px;
+}
+
+.auth-container .btn {
+    width: 95%;
+    margin-top: 10px;
+}
+
+.auth-container .register-btn {
+    background-color: #28a745;
+}
+
+.auth-container .register-btn:hover {
+    background-color: #218838;
+}
+
+.auth-container .message {
+    color: #ff6b6b;
+    margin-top: 15px;
+}
+
+.auth-container .signup-text {
+    margin-top: 15px;
+    color: #ccc;
+}
+
+/* ===========================
+   Responsive adjustments
+=========================== */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+    .sidebar {
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+    .main-content {
+        padding: 20px;
+    }
+}
+

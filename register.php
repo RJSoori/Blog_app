@@ -1,5 +1,6 @@
 <?php
 include 'db.php';
+
 $message = '';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -8,6 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
     $sql = "INSERT INTO users (username, email, password) VALUES ('$username', '$email', '$password')";
+
     if (mysqli_query($conn, $sql)) {
         $message = "Registration successful. <a href='login.php'>Login here</a>";
     } else {
@@ -18,16 +20,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Register</title>
+    <title>User Registration</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<h2>User Registration</h2>
-<form method="POST">
-    Username: <input type="text" name="username" required><br><br>
-    Email: <input type="email" name="email" required><br><br>
-    Password: <input type="password" name="password" required><br><br>
-    <button type="submit">Register</button>
-</form>
-<p><?= $message ?></p>
+<div class="auth-container">
+    <h2>Register</h2>
+    <form method="POST">
+        <input type="text" name="username" placeholder="Username" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <button type="submit" class="btn">Register</button>
+    </form>
+    <?php if (!empty($message)) { ?>
+        <p class="message"><?= $message ?></p>
+    <?php } ?>
+    <p class="signup-text">Already have an account?</p>
+    <a href="login.php" class="btn register-btn">Login Here</a>
+</div>
 </body>
 </html>
