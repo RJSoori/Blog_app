@@ -6,6 +6,7 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #121212;
     color: #e0e0e0;
+    scroll-behavior: smooth;
 }
 
 /* ===========================
@@ -19,30 +20,38 @@ body {
 /* Sidebar */
 .sidebar {
     width: 220px;
-    background-color: #1f1f1f;
+    background-color: #1a1a1a;
     padding: 30px 20px;
     display: flex;
     flex-direction: column;
     gap: 15px;
+    position: fixed;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.5);
 }
 
 .sidebar h2 {
-    color: #00bcd4;
-    margin-bottom: 20px;
+    color: #d4af37;
+    margin-bottom: 25px;
     font-size: 24px;
+    text-align: center;
 }
 
 .sidebar a {
     color: #b0b0b0;
     text-decoration: none;
-    padding: 10px 8px;
-    border-radius: 5px;
-    transition: 0.3s;
+    padding: 12px 10px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-weight: 500;
 }
 
-.sidebar a:hover {
-    background-color: #333;
-    color: #fff;
+.sidebar a:hover,
+.sidebar a.active {
+    background-color: #2a2a2a;
+    color: #d4af37;
 }
 
 /* ===========================
@@ -50,48 +59,165 @@ body {
 =========================== */
 .main-content {
     flex: 1;
+    margin-left: 240px; /* 220px sidebar + 20px gap */
     padding: 40px;
     background-color: #181818;
-}
-
-/* Headings */
-h2 {
-    color: #00bcd4;
-}
-
-h3 {
-    color: #00bcd4;
+    transition: all 0.4s ease;
 }
 
 /* ===========================
-   Post Styling
+   Posts Grid Layout
+=========================== */
+.posts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+/* ===========================
+   Post Styling (fixed height, content scroll)
 =========================== */
 .post {
     background-color: #1e1e1e;
     border: 1px solid #2a2a2a;
-    border-radius: 8px;
+    border-radius: 10px;
     padding: 20px;
-    margin-bottom: 20px;
     box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 350px; /* fixed height */
+    overflow: hidden;
+    position: relative;
 }
 
-.post h3, .post h4 {
-    margin-top: 0;
-    color: #ffffff;
+.post:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(212,175,55,0.15);
 }
 
-.post small {
-    color: #888;
+.post h4 {
+    color: #d4af37;
+    margin-bottom: 10px;
 }
 
-.actions a {
-    color: #00bcd4;
-    margin-right: 10px;
-    font-size: 14px;
+.post p {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 8; /* approx 8 lines of text */
+    -webkit-box-orient: vertical;
 }
 
-.actions a:hover {
-    text-decoration: underline;
+.actions {
+    margin-top: 10px;
+}
+
+/* ===========================
+   Buttons (Edit, Delete)
+=========================== */
+.btn {
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: 500;
+    text-decoration: none;
+    color: #fff;
+    background: #d4af37;
+    margin: 4px 4px 0 0;
+    transition: all 0.3s ease-in-out;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    background: #b89125;
+}
+
+.btn-delete {
+    background: #800000;
+}
+
+.btn-delete:hover {
+    background: #a30000;
+}
+
+/* ===========================
+   Read More Button
+=========================== */
+.read-more {
+    display: inline-block;
+    margin-top: 8px;
+    color: #d4af37;
+    font-weight: 500;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.read-more:hover {
+    color: #b89125;
+}
+
+/* ===========================
+   Modal for Read More
+=========================== */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(6px);
+    background-color: rgba(0,0,0,0.6);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-overlay.active {
+    display: flex;
+}
+
+.modal-content {
+    background-color: #1e1e1e;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+    max-width: 700px;
+    width: 90%;
+    color: #fff;
+    position: relative;
+    animation: scaleUp 0.3s ease forwards;
+}
+
+@keyframes scaleUp {
+    0% { transform: scale(0.7); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.modal-content h3 {
+    color: #d4af37;
+    margin-bottom: 15px;
+}
+
+.modal-content p {
+    color: #ddd;
+    line-height: 1.6;
+}
+
+.modal-close {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #d4af37;
+    transition: color 0.3s;
+}
+
+.modal-close:hover {
+    color: #b89125;
 }
 
 /* ===========================
@@ -123,66 +249,145 @@ button {
     border-radius: 5px;
     cursor: pointer;
     color: #fff;
-    background-color: #00bcd4;
+    background-color: #d4af37;
     transition: 0.3s;
 }
 
 button:hover {
-    background-color: #0097a7;
+    background-color: #b89125;
 }
 
-/* Auth Container (login/register/logout) */
-.auth-container {
-    max-width: 400px;
-    margin: 80px auto;
-    padding: 30px;
-    background-color: #1e1e1e;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-    text-align: center;
+.main-content form {
+    max-width: 800px; /* Sets a max-width for better readability */
 }
 
-.auth-container h2 {
-    margin-bottom: 20px;
+/* Ensures all elements use consistent sizing */
+.main-content form input,
+.main-content form textarea,
+.main-content form button {
+    box-sizing: border-box; /* Crucial for including padding in the 100% width */
 }
 
-.auth-container .btn {
-    width: 95%;
-    margin-top: 10px;
-}
-
-.auth-container .register-btn {
-    background-color: #28a745;
-}
-
-.auth-container .register-btn:hover {
-    background-color: #218838;
-}
-
-.auth-container .message {
-    color: #ff6b6b;
-    margin-top: 15px;
-}
-
-.auth-container .signup-text {
-    margin-top: 15px;
-    color: #ccc;
+/* Makes the button 100% wide to match the inputs */
+.main-content form button {
+    width: 100%;
 }
 
 /* ===========================
-   Responsive adjustments
+   Authentication Pages (Login/Register)
 =========================== */
+body.auth-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.auth-container {
+    background-color: #1e1e1e;
+    border: 1px solid #2a2a2a;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    max-width: 400px;
+    width: 100%;
+    margin: 20px; /* Prevents touching edges on small screens */
+    text-align: center;
+    box-sizing: border-box; /* Ensures padding is included in width */
+}
+
+.auth-container h2 {
+    color: #d4af37;
+    margin-top: 0;
+    margin-bottom: 25px;
+}
+
+/* Make the submit button full-width */
+.auth-container form .btn {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Style the error/success message */
+.message {
+    color: #ff6b6b; /* Red for errors */
+    margin-top: 20px;
+    font-size: 0.9em;
+}
+
+/* Style for the registration success link */
+.message a {
+    color: #d4af37;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.message a:hover {
+    text-decoration: underline;
+}
+
+/* Style the "Already have an account?" text */
+.signup-text {
+    margin-top: 25px;
+    margin-bottom: 10px;
+    color: #aaa;
+}
+
+/* Style the secondary "Login Here" / "Create Account" button */
+.register-btn {
+    background: transparent;
+    border: 1px solid #d4af37;
+    color: #d4af37;
+}
+
+.register-btn:hover {
+    background: rgba(212, 175, 55, 0.1);
+    color: #d4af37;
+}
+
+/* ===========================
+   Scroll Animation (Fade)
+=========================== */
+.fade-in {
+    opacity: 0;
+    transform: translateY(15px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ===========================
+   Responsive Adjustments
+=========================== */
+@media (max-width: 1024px) {
+    .posts-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+}
+
 @media (max-width: 768px) {
     .container {
         flex-direction: column;
     }
+
     .sidebar {
         width: 100%;
+        height: auto;
         flex-direction: row;
         justify-content: space-around;
+        position: relative;
+        box-shadow: none;
     }
+
     .main-content {
+        margin-left: 0;
+        padding: 20px;
+    }
+
+    .modal-content {
         padding: 20px;
     }
 }
-

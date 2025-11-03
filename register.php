@@ -23,8 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>User Registration</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
-<div class="auth-container">
+<body class="auth-page"> <div class="auth-container">
     <h2>Register</h2>
     <form method="POST">
         <input type="text" name="username" placeholder="Username" required>

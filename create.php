@@ -16,18 +16,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $content = $_POST['content'];
     $user_id = $_SESSION['user_id'];
 
-    $sql = "INSERT INTO posts (user_id, title, content) VALUES ('$user_id', '$title', '$content')";
-    if (mysqli_query($conn, $sql)) {
-        header("Location: index.php");
+    // Prepared statement to prevent SQL errors and injection
+    $stmt = $conn->prepare("INSERT INTO posts (user_id, title, content) VALUES (?, ?, ?)");
+    $stmt->bind_param("iss", $user_id, $title, $content);
+
+    if ($stmt->execute()) {
+        header("Location: home.php");
         exit;
     } else {
-        $message = "Error: " . mysqli_error($conn);
+        $message = "Error creating post: " . $stmt->error;
     }
+
+    $stmt->close();
 }
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Create Post</title>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -36,8 +42,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <!-- Sidebar -->
     <div class="sidebar">
         <h2>MyBlog</h2>
-        <a href="index.php">Dashboard</a>
-        <a href="create.php">Create Post</a>
+        <a href="home.php">Home</a>
+        <a href="create.php" class="active">Create Post</a>
+        <a href="index.php">My Posts</a>
         <a href="logout.php">Logout</a>
     </div>
 
@@ -56,5 +63,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </div>
 </body>
 </html>
-
-
