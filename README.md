@@ -27,7 +27,7 @@ Go check it out! The app is hosted live on InfinityFree:
 
 1.  **Clone the repository:**
     ```sh
-    git clone [https://github.com/RJSoori/Blog_app.git](https://github.com/RJSoori/Blog_app.git)
+    git clone https://github.com/RJSoori/Blog_app.git
     ```
 2.  **Import Database:** Import the `database.sql` file into your local MySQL server (e.g., via phpMyAdmin).
 3.  **Update Credentials:**
