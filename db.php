@@ -9,19 +9,20 @@ use Dotenv\Dotenv;
 $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
-// Establish a connection to the MySQL database using credentials from the .env file
+// Establish a connection to the MySQL database
 $conn = mysqli_connect(
-    $_ENV['DB_HOST'], // Database host
-    $_ENV['DB_USER'], // Database username
-    $_ENV['DB_PASS'], // Database password
-    $_ENV['DB_NAME']  // Database name
+    $_ENV['DB_HOST'],
+    $_ENV['DB_USER'],
+    $_ENV['DB_PASS'],
+    $_ENV['DB_NAME']
 );
 
-// Check if the connection failed and terminate the script with an error message
+// Check if the connection failed
 if (!$conn) {
     die("Database connection failed: " . mysqli_connect_error());
 }
 
-// Connection successful, $conn can now be used for database queries
+// Set the character set
+mysqli_set_charset($conn, "utf8mb4");
 ?>
 
