@@ -111,6 +111,39 @@ body {
     margin-top: 10px;
 }
 
+/* =====Single Post View (view_post.php)==== */
+.post-full-view {
+    background-color: #1e1e1e;
+    border: 1px solid #2a2a2a;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+}
+
+.post-meta {
+    font-size: 0.9em;
+    color: #d4af37;
+    line-height: 1.5;
+    margin-top: -10px;
+    margin-bottom: 20px;
+}
+
+.post-full-content {
+    color: #e0e0e0;
+    font-size: 1.1em;
+    line-height: 1.7;
+}
+
+.post h3 a {
+    text-decoration: none;
+    color: #d4af37;
+    transition: color 0.3s;
+}
+
+.post h3 a:hover {
+    color: #b89125;
+}
+
 /* ====Buttons (Edit, Delete)==== */
 .btn {
     display: inline-block;

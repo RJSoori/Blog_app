@@ -8,22 +8,16 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
-// Get logged-in user's ID
 $user_id = $_SESSION['user_id'];
 
-// --- B_FIX: Use Prepared Statement to prevent SQL injection ---
-// Prepare the statement
 $stmt = mysqli_prepare($conn, "SELECT * FROM posts WHERE user_id = ? ORDER BY created_at DESC");
 
-// Bind the parameter (s = string, i = integer, d = double, b = blob)
 mysqli_stmt_bind_param($stmt, "i", $user_id);
 
-// Execute the statement
 mysqli_stmt_execute($stmt);
 
-// Get the result
 $result = mysqli_stmt_get_result($stmt);
-// --- END OF FIX ---
+
 
 ?>
 <!DOCTYPE html>
@@ -51,15 +45,14 @@ $result = mysqli_stmt_get_result($stmt);
             <?php if (mysqli_num_rows($result) > 0): ?>
                 <?php while ($row = mysqli_fetch_assoc($result)): ?>
                     <div class="post fade-in">
-                        <h3><?= htmlspecialchars($row['title']) ?></h3>
+
+                        <h3>
+                            <a href="view_post.php?id=<?= $row['id'] ?>"><?= htmlspecialchars($row['title']) ?></a>
+                        </h3>
                         <p><?= nl2br(htmlspecialchars($row['content'])) ?></p>
 
-                        <div class="full-content" style="display: none;">
-                            <?= nl2br(htmlspecialchars($row['content'])) ?>
-                        </div>
-
                         <div class="post-footer">
-                            <span class="read-more">Read More</span><br>
+                            <a href="view_post.php?id=<?= $row['id'] ?>" class="read-more">Read More</a><br>
                             <small>Posted on <?= $row['created_at'] ?></small><br><br>
                             <div class="actions">
                                 <a href="edit.php?id=<?= $row['id'] ?>" class="btn">Edit</a>
@@ -75,13 +68,6 @@ $result = mysqli_stmt_get_result($stmt);
     </div>
 </div>
 
-<div class="modal-overlay" id="modalOverlay">
-    <div class="modal-content" id="modalContent">
-        <span class="modal-close" id="modalClose">&times;</span>
-        <h3 id="modalTitle"></h3>
-        <p id="modalBody"></p>
-    </div>
-</div>
 <script>
     document.addEventListener("DOMContentLoaded", () => {
         // Fade-in animation
@@ -96,32 +82,6 @@ $result = mysqli_stmt_get_result($stmt);
         }, appearOptions);
         fadeElements.forEach(el => appearOnScroll.observe(el));
 
-        // Modal functionality for Read More
-        const readMoreButtons = document.querySelectorAll(".read-more");
-        const modal = document.getElementById("modalOverlay");
-        const modalTitle = document.getElementById("modalTitle");
-        const modalBody = document.getElementById("modalBody");
-        const modalClose = document.getElementById("modalClose");
-
-        readMoreButtons.forEach(btn => {
-            btn.addEventListener("click", () => {
-                const post = btn.closest(".post");
-                modalTitle.textContent = post.querySelector("h3").textContent;
-
-                // R1 FIX: Read from the .full-content div
-                modalBody.innerHTML = post.querySelector(".full-content").innerHTML;
-
-                modal.classList.add("active");
-            });
-        });
-
-        modalClose.addEventListener("click", () => {
-            modal.classList.remove("active");
-        });
-
-        modal.addEventListener("click", e => {
-            if (e.target === modal) modal.classList.remove("active");
-        });
     });
 </script>
 </body>
