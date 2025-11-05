@@ -11,9 +11,20 @@ if (!isset($_SESSION['user_id'])) {
 // Get logged-in user's ID
 $user_id = $_SESSION['user_id'];
 
-// Fetch user's posts
-// NOTE: This query is functional but vulnerable to SQL injection. See recommendation below.
-$result = mysqli_query($conn, "SELECT * FROM posts WHERE user_id='$user_id' ORDER BY created_at DESC");
+// --- B_FIX: Use Prepared Statement to prevent SQL injection ---
+// Prepare the statement
+$stmt = mysqli_prepare($conn, "SELECT * FROM posts WHERE user_id = ? ORDER BY created_at DESC");
+
+// Bind the parameter (s = string, i = integer, d = double, b = blob)
+mysqli_stmt_bind_param($stmt, "i", $user_id);
+
+// Execute the statement
+mysqli_stmt_execute($stmt);
+
+// Get the result
+$result = mysqli_stmt_get_result($stmt);
+// --- END OF FIX ---
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -27,7 +38,8 @@ $result = mysqli_query($conn, "SELECT * FROM posts WHERE user_id='$user_id' ORDE
         <h2>MyBlog</h2>
         <a href="home.php">Home</a>
         <a href="create.php">Create Post</a>
-        <a href="index.php" class="active">My Posts</a> <a href="logout.php">Logout</a>
+        <a href="index.php" class="active">My Posts</a>
+        <a href="logout.php">Logout</a>
     </div>
 
     <div class="main-content">
@@ -41,11 +53,18 @@ $result = mysqli_query($conn, "SELECT * FROM posts WHERE user_id='$user_id' ORDE
                     <div class="post fade-in">
                         <h3><?= htmlspecialchars($row['title']) ?></h3>
                         <p><?= nl2br(htmlspecialchars($row['content'])) ?></p>
-                        <span class="read-more">Read More</span> <small>Posted on <?= $row['created_at'] ?></small><br><br>
 
-                        <div class="actions">
-                            <a href="edit.php?id=<?= $row['id'] ?>" class="btn">Edit</a>
-                            <a href="delete.php?id=<?= $row['id'] ?>" class="btn btn-delete" onclick="return confirm('Delete this post?')">Delete</a>
+                        <div class="full-content" style="display: none;">
+                            <?= nl2br(htmlspecialchars($row['content'])) ?>
+                        </div>
+
+                        <div class="post-footer">
+                            <span class="read-more">Read More</span><br>
+                            <small>Posted on <?= $row['created_at'] ?></small><br><br>
+                            <div class="actions">
+                                <a href="edit.php?id=<?= $row['id'] ?>" class="btn">Edit</a>
+                                <a href="delete.php?id=<?= $row['id'] ?>" class="btn btn-delete" onclick="return confirm('Delete this post?')">Delete</a>
+                            </div>
                         </div>
                     </div>
                 <?php endwhile; ?>
@@ -88,7 +107,10 @@ $result = mysqli_query($conn, "SELECT * FROM posts WHERE user_id='$user_id' ORDE
             btn.addEventListener("click", () => {
                 const post = btn.closest(".post");
                 modalTitle.textContent = post.querySelector("h3").textContent;
-                modalBody.innerHTML = post.querySelector("p").innerHTML;
+
+                // R1 FIX: Read from the .full-content div
+                modalBody.innerHTML = post.querySelector(".full-content").innerHTML;
+
                 modal.classList.add("active");
             });
         });
@@ -104,4 +126,3 @@ $result = mysqli_query($conn, "SELECT * FROM posts WHERE user_id='$user_id' ORDE
 </script>
 </body>
 </html>
-

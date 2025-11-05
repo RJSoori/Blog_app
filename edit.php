@@ -67,9 +67,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <!-- Main content -->
     <div class="main-content">
         <h2>Edit Post</h2>
-        <form method="POST" class="form-box">
+        <form method="POST">
             <input type="text" name="title" value="<?= htmlspecialchars($post['title']) ?>" placeholder="Post Title" required>
-            <textarea name="content" rows="8" placeholder="Post Content" required><?= htmlspecialchars($post['content']) ?></textarea>
+            <textarea name="content" rows="15" placeholder="Post Content" required><?= htmlspecialchars($post['content']) ?></textarea>
             <button type="submit">Update</button>
         </form>
         <?php if (!empty($message)) { ?>

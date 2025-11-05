@@ -1,6 +1,4 @@
-/* ===========================
-   General Body & Font
-=========================== */
+/* ====General Body & Font====*/
 body {
     margin: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -9,9 +7,7 @@ body {
     scroll-behavior: smooth;
 }
 
-/* ===========================
-   Dashboard Container & Sidebar
-=========================== */
+/* ====Dashboard Container & Sidebar====*/
 .container {
     display: flex;
     min-height: 100vh;
@@ -54,29 +50,23 @@ body {
     color: #d4af37;
 }
 
-/* ===========================
-   Main Content
-=========================== */
+/* ====Main Content==== */
 .main-content {
     flex: 1;
-    margin-left: 240px; /* 220px sidebar + 20px gap */
+    margin-left: 240px;
     padding: 40px;
     background-color: #181818;
     transition: all 0.4s ease;
 }
 
-/* ===========================
-   Posts Grid Layout
-=========================== */
+/* ====Posts Grid Layout==== */
 .posts-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 20px;
 }
 
-/* ===========================
-   Post Styling (fixed height, content scroll)
-=========================== */
+/* ====Post Styling (fixed height, content scroll)==== */
 .post {
     background-color: #1e1e1e;
     border: 1px solid #2a2a2a;
@@ -86,8 +76,8 @@ body {
     transition: all 0.3s ease;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    height: 350px; /* fixed height */
+    justify-content: flex-start;
+    height: 350px;
     overflow: hidden;
     position: relative;
 }
@@ -106,17 +96,22 @@ body {
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
-    -webkit-line-clamp: 8; /* approx 8 lines of text */
+    -webkit-line-clamp: 7;
     -webkit-box-orient: vertical;
+    margin-bottom: 10px;
+}
+
+.post-footer {
+    margin-top: auto;
+    padding-top: 10px;
+    border-top: 1px solid #2a2a2a;
 }
 
 .actions {
     margin-top: 10px;
 }
 
-/* ===========================
-   Buttons (Edit, Delete)
-=========================== */
+/* ====Buttons (Edit, Delete)==== */
 .btn {
     display: inline-block;
     padding: 8px 16px;
@@ -142,9 +137,7 @@ body {
     background: #a30000;
 }
 
-/* ===========================
-   Read More Button
-=========================== */
+/* ====Read More Button==== */
 .read-more {
     display: inline-block;
     margin-top: 8px;
@@ -158,9 +151,7 @@ body {
     color: #b89125;
 }
 
-/* ===========================
-   Modal for Read More
-=========================== */
+/* ====Modal for Read More==== */
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -189,6 +180,9 @@ body {
     color: #fff;
     position: relative;
     animation: scaleUp 0.3s ease forwards;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
 }
 
 @keyframes scaleUp {
@@ -204,6 +198,12 @@ body {
 .modal-content p {
     color: #ddd;
     line-height: 1.6;
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-wrap: break-word;
+    padding-right: 10px;
+    margin-bottom: 0;
 }
 
 .modal-close {
@@ -220,9 +220,7 @@ body {
     color: #b89125;
 }
 
-/* ===========================
-   Forms (Dashboard / Auth)
-=========================== */
+/* ====Forms (Dashboard / Auth)==== */
 form {
     display: flex;
     flex-direction: column;
@@ -258,14 +256,14 @@ button:hover {
 }
 
 .main-content form {
-    max-width: 800px; /* Sets a max-width for better readability */
+    max-width: 1400px;
 }
 
 /* Ensures all elements use consistent sizing */
 .main-content form input,
 .main-content form textarea,
 .main-content form button {
-    box-sizing: border-box; /* Crucial for including padding in the 100% width */
+    box-sizing: border-box;
 }
 
 /* Makes the button 100% wide to match the inputs */
@@ -273,9 +271,7 @@ button:hover {
     width: 100%;
 }
 
-/* ===========================
-   Authentication Pages (Login/Register)
-=========================== */
+/* ====Authentication Pages (Login/Register)==== */
 body.auth-page {
     display: flex;
     justify-content: center;
@@ -291,9 +287,9 @@ body.auth-page {
     box-shadow: 0 4px 12px rgba(0,0,0,0.5);
     max-width: 400px;
     width: 100%;
-    margin: 20px; /* Prevents touching edges on small screens */
+    margin: 20px;
     text-align: center;
-    box-sizing: border-box; /* Ensures padding is included in width */
+    box-sizing: border-box;
 }
 
 .auth-container h2 {
@@ -310,7 +306,7 @@ body.auth-page {
 
 /* Style the error/success message */
 .message {
-    color: #ff6b6b; /* Red for errors */
+    color: #ff6b6b;
     margin-top: 20px;
     font-size: 0.9em;
 }
@@ -345,9 +341,7 @@ body.auth-page {
     color: #d4af37;
 }
 
-/* ===========================
-   Scroll Animation (Fade)
-=========================== */
+/* ====Scroll Animation (Fade)==== */
 .fade-in {
     opacity: 0;
     transform: translateY(15px);
@@ -359,9 +353,7 @@ body.auth-page {
     transform: translateY(0);
 }
 
-/* ===========================
-   Responsive Adjustments
-=========================== */
+/* ====Responsive Adjustments==== */
 @media (max-width: 1024px) {
     .posts-grid {
         grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
